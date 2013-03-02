@@ -1,5 +1,6 @@
 package view 
 {
+	import com.greensock.TweenLite;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -24,6 +25,11 @@ package view
 			graphics.beginFill(0xffffff);
 			graphics.drawRect(0, 0, maxWidth, maxHeight);
 			graphics.endFill();
+			
+			CONFIG::debug
+			{
+				//TweenLite.initClass();
+			}
 		}
 		
 		public function show($url:String):void
@@ -65,7 +71,16 @@ package view
 			loader.x = (maxWidth - loader.width) / 2;
 			loader.y = (maxHeight - loader.height) / 2;
 			
-			loader.alpha = 1;
+			CONFIG::debug
+			{
+				TweenLite.killTweensOf(loader);
+				TweenLite.to(loader, 1, { alpha: 1 } );
+			}
+			
+			CONFIG::release
+			{
+				loader.alpha = 1;
+			}
 		}
 		
 	}
